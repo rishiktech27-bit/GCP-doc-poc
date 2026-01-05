@@ -1,0 +1,64 @@
+{
+  "name": "ClaimXpert_Production_Eval_Set",
+  "eval_cases": [
+    {
+      "eval_id": "case_001_standard_auto_claim",
+      "conversation": [
+        {
+          "user_content": {
+            "role": "user",
+            "parts": [
+              {
+                "text": "I want to file a claim for my broken windshield on policy POL-123. It happened yesterday."
+              }
+            ]
+          },
+          "intermediate_data": {
+            "tool_uses": [
+              { "name": "doc_parsing_agent", "args": { "query": "broken windshield" } },
+              { "name": "duplicate_claim_agent", "args": { "policy_id": "POL-123" } },
+              { "name": "policy_match_agent", "args": { "policy_id": "POL-123" } },
+              { "name": "policy_qa_agent", "args": { "question": "Is glass damage covered?" } }
+            ]
+          },
+          "final_response": {
+            "role": "model",
+            "parts": [
+              {
+                "text": "I have processed your claim for policy POL-123. I found no duplicate claims. Your policy covers glass damage with a $50 deductible. A confirmation has been sent to your email."
+              }
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "eval_id": "case_002_duplicate_detection",
+      "conversation": [
+        {
+          "user_content": {
+            "role": "user",
+            "parts": [
+              {
+                "text": "Submit a new claim for water damage on POL-456."
+              }
+            ]
+          },
+          "intermediate_data": {
+            "tool_uses": [
+              { "name": "duplicate_claim_agent", "args": { "policy_id": "POL-456" } }
+            ]
+          },
+          "final_response": {
+            "role": "model",
+            "parts": [
+              {
+                "text": "I cannot process this claim because a duplicate for water damage on policy POL-456 was already filed on March 12th."
+              }
+            ]
+          }
+        }
+      ]
+    }
+  ]
+}

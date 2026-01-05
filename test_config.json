@@ -1,0 +1,22 @@
+{
+  "criteria": {
+    "tool_trajectory_avg_score": {
+      "threshold": 0.8,
+      "match_type": "IN_ORDER"
+    },
+    "rubric_based_final_response_quality_v1": {
+      "threshold": 0.7,
+      "rubrics": [
+        {
+          "rubric_id": "claim_compliance_rubric",
+          "description": "Evaluates insurance accuracy, duplicate checks, and professional tone.",
+          "rubric_file": "rubrics/compliance_check.txt"
+        }
+      ]
+    },
+    "hallucination_v1": {
+      "threshold": 0.1
+    }
+  },
+  "judge_model": "gemini-1.5-pro"
+}
